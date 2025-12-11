@@ -55,3 +55,4 @@ htmlcov/
 # Misc
 .env
 .DS_Store
+text.txt
