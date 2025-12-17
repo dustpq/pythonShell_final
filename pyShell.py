@@ -7,6 +7,7 @@ def clear_screen():
 def start_shell():
     """Starts a simple interactive shell."""
     clear_screen()
+    os.chdir("shellHome")
     print("Welcome to the pyShell!")
     print("Type 'help' for a list of commands.")
     print("Type 'exit' to quit.")
@@ -39,6 +40,44 @@ def start_shell():
                 filename = parts[1] if len(parts) > 1 else None
                 vim(filename)
 
+            elif command.startswith('mkdir'):
+                parts = command.split(maxsplit=1)
+                if len(parts) < 2:
+                    print("Usage: mkdir <dirname>")
+                else:
+                    mkdir(parts[1])
+
+            elif command.startswith('rmdir'):
+                parts = command.split(maxsplit=1)
+                if len(parts) < 2:
+                    print("Usage: rmdir <dirname>")
+                else:
+                    rmdir(parts[1])
+
+            elif command.startswith('rm'):
+                parts = command.split(maxsplit=1)
+                if len(parts) < 2:
+                    print("Usage: rm <filename>")
+                else:
+                    rm(parts[1])
+
+            elif command.startswith('touch'):
+                parts = command.split(maxsplit=1)
+                if len(parts) < 2:
+                    print("Usage: touch <filename>")
+                else:
+                    touch(parts[1])
+
+            elif command.startswith('cd'):
+                parts = command.split(maxsplit=1)
+                if len(parts) < 2:
+                    print("Usage: cd <dirname>")
+                else:
+                    cd(parts[1])
+
+            elif command == 'cwd':
+                print(cwd())
+
             else:
                 try:
                     # Try to evaluate the command as an expression
@@ -50,6 +89,7 @@ def start_shell():
                     exec(command)
         except Exception as e:
             print(f"Error: {e}")
+        
 
 def help():
     """Displays help information."""
@@ -141,6 +181,10 @@ def cd(dirname):
         os.chdir(dirname)
     except Exception as e:
         print(f"Error: {e}")
+
+def cwd():
+    """Returns the current working directory."""
+    return os.getcwd()
 
 if __name__ == "__main__":
     start_shell()
